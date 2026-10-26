@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171225">
+  <title>Éclat — À propos de moi</title>
+  <style>
+    :root {
+      --bg: #100d19;
+      --panel: rgba(31, 24, 45, .88);
+      --panel-light: rgba(49, 37, 66, .8);
+      --text: #f7f0ff;
+      --muted: #c7b8d9;
+      --accent: #d9a8ff;
+      --accent2: #ff9dcf;
+      --border: rgba(226, 195, 255, .2);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 15% 0%, rgba(133, 72, 174, .25), transparent 40%),
+        radial-gradient(ellipse at 100% 20%, rgba(195, 77, 145, .15), transparent 35%),
+        var(--bg);
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; }
+    .wrap { width: min(1050px, calc(100% - 32px)); margin: auto; }
+    header { padding: 28px 0 18px; }
+    .nav {
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+      padding: 14px 18px; border: 1px solid var(--border); border-radius: 18px;
+      background: rgba(20, 15, 30, .75); backdrop-filter: blur(12px);
+    }
+    .brand { font-weight: 850; letter-spacing: .08em; color: var(--accent); }
+    nav { display: flex; flex-wrap: wrap; gap: 14px; }
+    nav a { color: var(--muted); text-decoration: none; font-size: .92rem; }
+    nav a:hover { color: white; }
+    .hero {
+      min-height: 330px; display: grid; align-content: center; padding: 54px 0 60px;
+    }
+    .eyebrow { color: var(--accent2); text-transform: uppercase; letter-spacing: .18em; font-size: .78rem; font-weight: 750; }
+    h1 { font-size: clamp(2.8rem, 9vw, 5.5rem); line-height: 1.02; margin: 10px 0 16px; letter-spacing: -.05em; }
+    h1 span { color: var(--accent); }
+    .intro { max-width: 620px; color: var(--muted); font-size: 1.1rem; margin: 0; }
+    .pill { display: inline-flex; margin-top: 22px; border: 1px solid var(--border); background: var(--panel); border-radius: 999px; padding: 7px 13px; color: var(--muted); font-size: .9rem; }
+    section { padding: 24px 0 42px; }
+    .section-head { margin-bottom: 18px; }
+    h2 { font-size: clamp(1.7rem, 4vw, 2.3rem); margin: 0 0 5px; }
+    .sub { color: var(--muted); margin: 0; }
+    .about-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .panel {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 20px;
+      padding: 22px; box-shadow: 0 12px 40px rgba(0,0,0,.12);
+    }
+    .panel h3 { margin: 0 0 8px; }
+    .panel p { color: var(--muted); margin: 0; }
+    .placeholder { border: 1px dashed rgba(226,195,255,.35); border-radius: 12px; padding: 13px; color: var(--muted); font-size: .92rem; margin-top: 12px; }
+    .panel.wide { grid-column: 1 / -1; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .chip { border: 1px solid var(--border); background: var(--panel-light); color: var(--text); border-radius: 999px; padding: 6px 14px; font-size: .9rem; }
+    .pseudo-row { display: flex; align-items: center; gap: 10px; }
+    .info-btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border); background: var(--panel-light); color: var(--accent); border-radius: 999px; padding: 4px 12px; font: inherit; font-size: .82rem; font-weight: 750; cursor: pointer; transition: border-color .2s ease, transform .2s ease; }
+    .info-btn:hover { border-color: rgba(255,157,207,.6); transform: translateY(-1px); }
+    dialog.info-modal { border: 1px solid var(--border); border-radius: 20px; background: var(--panel); color: var(--text); padding: 24px; width: min(92vw, 360px); box-shadow: 0 24px 80px rgba(0,0,0,.5); }
+    dialog.info-modal::backdrop { background: rgba(10,7,18,.7); backdrop-filter: blur(4px); }
+    .info-modal h3 { margin: 0 0 14px; color: var(--accent); }
+    .info-modal ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .info-modal li { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px; color: var(--muted); }
+    .info-modal li strong { color: var(--text); text-align: right; }
+    .info-modal .close { margin-top: 18px; width: 100%; border: 0; border-radius: 12px; padding: 10px; font: inherit; font-weight: 750; cursor: pointer; color: #1a1226; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+    img.portrait { cursor: zoom-in; }
+    dialog.lightbox { border: 0; background: transparent; padding: 0; max-width: 96vw; max-height: 96vh; overflow: visible; }
+    dialog.lightbox::backdrop { background: rgba(10,7,18,.88); backdrop-filter: blur(6px); }
+    .lightbox img { display: block; max-width: 94vw; max-height: 88vh; border-radius: 18px; border: 1px solid var(--border); box-shadow: 0 24px 80px rgba(0,0,0,.6); cursor: zoom-out; }
+    .lightbox .lb-close { position: absolute; top: -14px; right: -6px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border); background: var(--panel); color: var(--text); font-size: 1.1rem; cursor: pointer; }
+    .waifu-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+    .waifu {
+      overflow: hidden; padding: 0; border-radius: 18px; background: var(--panel);
+      border: 1px solid var(--border); min-width: 0;
+    }
+    .portrait {
+      width: 100%; aspect-ratio: 3 / 4; display: block; object-fit: cover;
+      background: linear-gradient(145deg, #39254e, #171225);
+    }
+    .rank { color: var(--accent2); font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; font-weight: 800; }
+    .waifu-info { padding: 13px; }
+    .waifu-info h3 { margin: 4px 0 0; font-size: 1rem; }
+    .image-note { color: var(--muted); font-size: .85rem; margin-top: 14px; }
+    .adult-note { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; border: 1px solid rgba(255,157,207,.35); background: rgba(255,157,207,.08); color: var(--accent2); border-radius: 999px; padding: 5px 12px; font-size: .8rem; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; }
+    .kink-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+    .kink {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 18px;
+      padding: 18px; box-shadow: 0 12px 40px rgba(0,0,0,.12); min-width: 0;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+    .kink:hover { transform: translateY(-3px); border-color: rgba(255,157,207,.5); }
+    .kink .icon { font-size: 1.4rem; display: block; margin-bottom: 8px; }
+    .kink h3 { margin: 0; font-size: 1rem; color: var(--text); }
+    .kink::after { content: ""; display: block; width: 28px; height: 2px; margin-top: 10px; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+    footer { padding: 28px 0 42px; color: var(--muted); font-size: .9rem; text-align: center; }
+    @media (max-width: 760px) {
+      .kink-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .waifu-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .waifu:last-child { grid-column: auto; }
+      .about-grid { grid-template-columns: 1fr; }
+      .nav { align-items: flex-start; flex-direction: column; }
+      nav { gap: 10px 14px; }
+    }
+    @media (min-width: 761px) and (max-width: 950px) {
+      .waifu-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <div class="nav">
+      <div class="brand">ÉCLAT ✦</div>
+      <nav aria-label="Navigation principale">
+        <a href="#accueil">Accueil</a>
+        <a href="#apropos">À propos</a>
+        <a href="#top-waifu">Top 5 waifu</a>
+        <a href="#kinks">Kinks</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" id="accueil">
+      <div class="eyebrow">Bienvenue dans mon univers</div>
+      <h1>Moi, c’est <span>Éclat</span>.</h1>
+      <p class="intro">Un petit site personnel pour partager mes goûts, mes passions et les choses qui me représentent. Le reste de la présentation arrivera bientôt !</p>
+      <div><span class="pill">✦ Profil en construction</span></div>
+    </section>
+
+    <section id="apropos">
+      <div class="section-head">
+        <h2>À propos de moi</h2>
+        <p class="sub">Un peu plus sur moi.</p>
+      </div>
+      <div class="about-grid">
+        <article class="panel">
+          <h3>🌙 Mon pseudo</h3>
+          <div class="pseudo-row">
+            <p>Éclat</p>
+            <button class="info-btn" type="button" id="infoBtn">✦ Infos</button>
+          </div>
+        </article>
+        <article class="panel">
+          <h3>🎂 Mon âge</h3>
+          <p>19 ans</p>
+        </article>
+        <article class="panel wide">
+          <h3>🎮 Mes jeux du moment</h3>
+          <p>J’aime les jeux vidéo. En ce moment, je joue à :</p>
+          <div class="chips">
+            <span class="chip">Arknights: Endfield</span>
+            <span class="chip">Genshin Impact</span>
+            <span class="chip">Among Us</span>
+            <span class="chip">Metalstorm</span>
+          </div>
+        </article>
+        <article class="panel">
+          <h3>🐈 Chats &amp; nature</h3>
+          <p>J’adore les chats (j’en ai 6 !) et la nature.</p>
+        </article>
+        <article class="panel">
+          <h3>💞 Ma famille</h3>
+          <p>J’ai une sœur.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="top-waifu">
+      <div class="section-head">
+        <h2>Mon top 5 waifu 💜</h2>
+        <p class="sub">Mes personnages préférées, classées dans mon ordre actuel.</p>
+      </div>
+      <div class="waifu-grid">
+        <article class="waifu">
+          <img class="portrait" src="data/kafka/img1.png" alt="Image de Kafka" loading="lazy">
+          <div class="waifu-info"><div class="rank">N° 1</div><h3>Kafka</h3></div>
+        </article>
+        <article class="waifu">
+          <img class="portrait" src="data/nom_personnage/img1.png" alt="Image de personnage" loading="lazy">
+          <div class="waifu-info"><div class="rank">N° 2</div><h3>Nom du personnage</h3></div>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
